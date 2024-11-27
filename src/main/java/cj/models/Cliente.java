@@ -12,6 +12,7 @@ public class Cliente {
     private long telefono;
     private String correoElectronico;
     private String direccion;
+    private int habitacion;
 
     public Cliente() {
     }
@@ -20,7 +21,7 @@ public class Cliente {
         this.id_cliente = id_cliente;
     }
 
-    public Cliente(String nombre, String apellido, String tipoIdentificacion, long numeroIdentificacion, String fechaNacimiento, String genero, long telefono, String correoElectronico, String direccion) {
+    public Cliente(String nombre, String apellido, String tipoIdentificacion, long numeroIdentificacion, String fechaNacimiento, String genero, long telefono, String correoElectronico, String direccion,int habitacion) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.tipoIdentificacion = tipoIdentificacion;
@@ -30,9 +31,10 @@ public class Cliente {
         this.telefono = telefono;
         this.correoElectronico = correoElectronico;
         this.direccion = direccion;
+        this.habitacion = habitacion;
     }
 
-    public Cliente(int id_cliente, String nombre, String apellido, String tipoIdentificacion, long numeroIdentificacion, String fechaNacimiento, String genero, long telefono, String correoElectronico, String direccion) {
+    public Cliente(int id_cliente, String nombre, String apellido, String tipoIdentificacion, long numeroIdentificacion, String fechaNacimiento, String genero, long telefono, String correoElectronico, String direccion,int habitacion) {
         this.id_cliente = id_cliente;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -43,7 +45,17 @@ public class Cliente {
         this.telefono = telefono;
         this.correoElectronico = correoElectronico;
         this.direccion = direccion;
+        this.habitacion = habitacion;
     }
+
+    public int getHabitacion() {
+        return habitacion;
+    }
+
+    public void setHabitacion(int habitacion) {
+        this.habitacion = habitacion;
+    }
+
 
     public int getId_cliente() {
         return id_cliente;

@@ -1,3 +1,4 @@
+<%@ page import="cj.datos.HabitacionesDAO" %>
 <%@taglib prefix="c" uri="jakarta.tags.core" %>
 <!doctype html>
 <html lang="es">
@@ -22,53 +23,59 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>lista de clientes</h4>
+                <div data-bs-spy="scroll"  data-bs-smooth-scroll="true" class="scrollspy" tabindex="0" >
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>lista de clientes</h4>
+                        </div>
+                        <table class="table table-striped table-sm">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>nombre</th>
+                                <th>tipo de documento</th>
+                                <th>numero de documento</th>
+                                <th>Fecha de nacimiento</th>
+                                <th>genero</th>
+                                <th>telefono</th>
+                                <th>correo</th>
+                                <th>direccion</th>
+                                <td>Habitacion</td>
+                                <th>Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach var="cliente" items="${clientes}" varStatus="status">
+                                <tr>
+                                    <td>${status.count}</td>
+                                    <td>${cliente.nombre} ${cliente.apellido}</td>
+                                    <td>${cliente.tipoIdentificacion}</td>
+                                    <td>${cliente.numeroIdentificacion}</td>
+                                    <td>${cliente.fechaNacimiento}</td>
+                                    <td>${cliente.genero}</td>
+                                    <td>${cliente.telefono}</td>
+                                    <td>${cliente.correoElectronico}</td>
+                                    <td>${cliente.direccion}</td>
+                                    <td>${cliente.habitacion}</td>
+                                    <td>
+                                        <a href="${pageContext.request.contextPath}/cliente-controller?accion=editar&idCliente=${cliente.id_cliente}" class="btn btn-secondary btn-sm">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <a href="${pageContext.request.contextPath}/cliente-controller?accion=eliminar&idCliente=${cliente.id_cliente}&&ir=listar" class="btn btn-danger btn-sm">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
                     </div>
-                    <table class="table table-striped table-sm">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th>#</th>
-                            <th>nombre</th>
-                            <th>tipo de documento</th>
-                            <th>numero de documento</th>
-                            <th>Fecha de nacimiento</th>
-                            <th>genero</th>
-                            <th>telefono</th>
-                            <th>correo</th>
-                            <th>direccion</th>
-                            <th>Acciones</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                         <c:forEach var="cliente" items="${clientes}" varStatus="status">
-                             <tr>
-                                 <td>${status.count}</td>
-                                 <td>${cliente.nombre} ${cliente.apellido}</td>
-                                 <td>${cliente.tipoIdentificacion}</td>
-                                 <td>${cliente.numeroIdentificacion}</td>
-                                 <td>${cliente.fechaNacimiento}</td>
-                                 <td>${cliente.genero}</td>
-                                 <td>${cliente.telefono}</td>
-                                 <td>${cliente.correoElectronico}</td>
-                                 <td>${cliente.direccion}</td>
-                                 <td>
-                                     <a href="${pageContext.request.contextPath}/servlet-controller?accion=editar&idCliente=${cliente.id_cliente}" class="btn btn-secondary btn-sm">
-                                         <i class="bi bi-pencil"></i>
-                                     </a>
-                                     <a href="${pageContext.request.contextPath}/servlet-controller?accion=eliminar&idCliente=${cliente.id_cliente}&&ir=listar" class="btn btn-danger btn-sm">
-                                         <i class="bi bi-trash"></i>
-                                     </a>
-                                 </td>
-                             </tr>
-                         </c:forEach>
-                        </tbody>
-                    </table>
                 </div>
             </div>
 
         </div>
+
     </div>
 </section>
 <jsp:include page="../commons/footer.jsp"/>

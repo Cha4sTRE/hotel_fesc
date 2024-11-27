@@ -14,19 +14,19 @@
             </ul>
             <!-- Left links -->
             <div class="d-flex align-items-center">
-                <a href="${pageContext.request.contextPath}/servlet-controller?accion=listar">
+                <a href="${pageContext.request.contextPath}/cliente-controller?accion=listar">
                     <button data-mdb-ripple-init type="button" class="btn btn-primary me-3">
                         <i class="bi bi-people"></i>
                         Clientes
                     </button>
                 </a>
-                <a href="${pageContext.request.contextPath}/servlet-controller?accion=listar">
+                <%--<a href="${pageContext.request.contextPath}/servlet-controller?accion=listar">
                     <button data-mdb-ripple-init type="button" class="btn btn-primary me-3">
                         <i class="bi bi-basket2-fill"></i>
                         Restaurante
                     </button>
-                </a>
-                <a href="${pageContext.request.contextPath}/servlet-controller?accion=listar">
+                </a>--%>
+                <a href="${pageContext.request.contextPath}/habitaciones-controller?accion=listar">
                     <button data-mdb-ripple-init type="button" class="btn btn-primary me-3">
                         <i class="bi bi-house-door-fill"></i>
                         Habitaciones

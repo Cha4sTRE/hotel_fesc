@@ -1,13 +1,16 @@
 package cj.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import cj.datos.AdminDAO;
 import cj.datos.ClienteDAO;
+import cj.datos.HabitacionesDAO;
 import cj.models.Admin;
 import cj.models.Cliente;
+import cj.models.Habitaciones;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,8 +19,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet(name = "controllerServlet", urlPatterns = {"/servlet-controller"})
-public class controllerServlet extends HttpServlet {
+@WebServlet(name = "clienteServlet", urlPatterns = {"/cliente-controller"})
+public class ClienteServlet extends HttpServlet {
 
 
     @Override
@@ -89,8 +92,10 @@ public class controllerServlet extends HttpServlet {
     private void listarClientes(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         List<Cliente> clientes= new ClienteDAO().listarClientes();
+        List<Habitaciones> habitaciones= new HabitacionesDAO().listarHabitaciones();
         HttpSession sesion=request.getSession();
         sesion.setAttribute("clientes",clientes);
+        sesion.setAttribute("habitaciones",habitaciones);
         String listaClientes = "WEB-INF/pages/cliente/listaClientes.jsp";
         request.getRequestDispatcher(listaClientes).forward(request,response);
 
@@ -106,9 +111,14 @@ public class controllerServlet extends HttpServlet {
         long telefono= Long.parseLong(request.getParameter("telefono"));
         String email= request.getParameter("email");
         String direccion= request.getParameter("direccion");
+        int id_habitacion= Integer.parseInt(request.getParameter("habitacion"));
+        int numHabitacion=new HabitacionesDAO().encontrarHabitacion(new Habitaciones(id_habitacion)).getNumeroHabitacion();
+        Cliente nuevoCliente= new Cliente(nombre,apellido,tc,ni,fechaN,genero,telefono,email,direccion,numHabitacion);
+        int idGenerado= new ClienteDAO().insertar(nuevoCliente);
 
-        Cliente nuevoCliente= new Cliente(nombre,apellido,tc,ni,fechaN,genero,telefono,email,direccion);
-        new ClienteDAO().insertar(nuevoCliente);
+        boolean estadoAsignacion= new HabitacionesDAO().asignarHabitacion(idGenerado,id_habitacion,new HabitacionesDAO().encontrarHabitacion(new Habitaciones(id_habitacion)).getNumeroHabitacion());
+
+        if (estadoAsignacion) System.out.println("habitacion asignada correctamente");
         this.listarClientes(request, response);
 
     }
@@ -132,13 +142,18 @@ public class controllerServlet extends HttpServlet {
         long telefono= Long.parseLong(request.getParameter("telefono"));
         String email= request.getParameter("email");
         String direccion= request.getParameter("direccion");
-
-        Cliente cliente=new Cliente(idCliente,nombre,apellido,tc,ni,fechaN,genero,telefono,email,direccion);
+        int id_habitacion= Integer.parseInt(request.getParameter("habitacion"));
+        int numHabitacion=new HabitacionesDAO().encontrarHabitacion(new Habitaciones(id_habitacion)).getNumeroHabitacion();
+        Cliente cliente=new Cliente(idCliente,nombre,apellido,tc,ni,fechaN,genero,telefono,email,direccion,numHabitacion);
         new ClienteDAO().actualizar(cliente);
     }
     private void eliminarCliente(HttpServletRequest request, HttpServletResponse response){
 
         int idCliente= Integer.parseInt(request.getParameter("idCliente"));
+        //elimina la reserva de habitacion
+        int id_reserva= new HabitacionesDAO().obtenerIdReserva(idCliente);
+        new HabitacionesDAO().eliminarReserva(id_reserva);
+        //elimina al cliente
         Cliente clienteAEliminar= new Cliente(idCliente);
         new ClienteDAO().eliminarCliente(clienteAEliminar);
 

@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="jakarta.tags.core" %>
 <!doctype html>
 <html lang="es">
 <head>
@@ -13,7 +14,7 @@
                 <h5 class="modal-title" id="agregarClienteLabel">Agregar Cliente</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="${pageContext.request.contextPath}/servlet-controller?accion=insertar"
+            <form action="${pageContext.request.contextPath}/cliente-controller?accion=insertar"
                   method="POST" class="was-validated">
                 <div class="modal-body">
                     <div class="form-group mb-3">
@@ -40,10 +41,6 @@
                         <label for="f.nacimiento">Fecha de nacimiento</label>
                         <input type="date" class="form-control" id="f.nacimiento" name="f.nacimiento" required/>
                     </div>
-                    <%--<div class="form-group mb-3">
-                        <label for="genero">Genero</label>
-                        <input type="text" class="form-control" id="genero" name="genero" required/>
-                    </div>--%>
                     <div class="form-group mb-3">
                         <label for="genero">Genero:</label>
                         <select class="form-select" name="genero" id="genero" required>
@@ -62,8 +59,16 @@
                         <input type="email" class="form-control" id="email" name="email" required/>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="direccion">direccion</label>
+                        <label for="direccion">direccion:</label>
                         <input type="text" class="form-control" id="direccion" name="direccion" required/>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="habitacion">Habitacion:</label>
+                        <select name="habitacion" id="habitacion" class="form-select" required>
+                            <c:forEach var="habitacion" items="${habitaciones}">
+                                <option value="${habitacion.id_habitacion}"> Habitacion ${habitacion.numeroHabitacion}, ${habitacion.tipo}: ${habitacion.estado}</option>
+                            </c:forEach>
+                        </select>
                     </div>
 
                 </div>

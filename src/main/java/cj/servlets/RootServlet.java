@@ -13,6 +13,6 @@ public class RootServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        response.sendRedirect(request.getContextPath() + "/servlet-controller");
+        response.sendRedirect(request.getContextPath() + "/cliente-controller");
     }
 }
